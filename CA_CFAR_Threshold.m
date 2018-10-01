@@ -43,10 +43,10 @@ for CUT = (N/2 + 1):1:(D - N/2)    % first N/2 and last N/2 samples in signal wi
 end
 
 % compute CA-CFAR constant 'a' for desired PFA
-a = N.*(PFA.^(-(1./N)) - 1);    %1xk
+a = N.*(PFA.^(-(1./N)) - 1);
 
 % compute detection threshold 'T'
-T = a.*g;  % 1xk matrix
+T = a.*g;
 
 % plot the threshold and noise
 x = 0:(D - 1); % x-axis sample number

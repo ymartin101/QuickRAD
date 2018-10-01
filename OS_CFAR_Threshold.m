@@ -59,7 +59,7 @@ for a_temp = 0:0.0001:25
 end
 
 % compute detection threshold 'T'
-T = a.*g;  % 1xk matrix
+T = a.*g;
 
 % plot the threshold and noise
 x = 0:(D - 1); % x-axis sample number

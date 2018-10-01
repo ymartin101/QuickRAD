@@ -49,10 +49,10 @@ for iteration = 1:iterations
     end
 
     % compute CA-CFAR constant 'a' for desired PFA
-    a = N.*(PFA.^(-(1./N)) - 1);    %1xk
+    a = N.*(PFA.^(-(1./N)) - 1);
 
     % compute detection threshold 'T'
-    T = a.*g;  % 1xD matrix
+    T = a.*g;
     TCA_array(iteration,:) = T;
 
     %% GOCA-CFAR
@@ -72,7 +72,7 @@ for iteration = 1:iterations
     a_GOCA = 2;
 
     % compute detection threshold 'T'
-    T_GOCA = a_GOCA.*g_GOCA;  % 1xk matrix
+    T_GOCA = a_GOCA.*g_GOCA;
     TGOCA_array(iteration,:) = T_GOCA;
 
     %% OS-CFAR
@@ -88,7 +88,7 @@ for iteration = 1:iterations
     a_OS = 20.9542;
 
     % compute detection threshold 'T'
-    T_OS = a_OS.*g_OS;  % 1xk matrix
+    T_OS = a_OS.*g_OS;
     TOS_array(iteration,:) = T_OS;
 
     %% OSGO-CFAR
@@ -109,7 +109,7 @@ for iteration = 1:iterations
     a_OSGO = 12.85;
 
     % compute detection threshold 'T'
-    T_OSGO = a_OSGO.*g_OSGO;  % 1xk matrix
+    T_OSGO = a_OSGO.*g_OSGO;
     TOSGO_array(iteration,:) = T_OSGO;
 end
     

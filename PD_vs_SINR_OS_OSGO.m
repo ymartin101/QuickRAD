@@ -94,7 +94,7 @@ xlabel('SINR [dB]');
 ylabel('Probability of Detection');
 grid on;
 hold on;
-plot(SNR_dB,OSGO_PD_matrix,'-.',SNR_dB,OS_PD_matrix,'--','LineWidth',1.5);
+plot(SNR_dB,OSGO_PD_matrix,'-',SNR_dB,OS_PD_matrix,'--r','LineWidth',1.5);
 SNR_vs_PD_legend = legend('OSGO-CFAR','OS-CFAR');
 set(SNR_vs_PD_legend,'Location','SouthEast');
 

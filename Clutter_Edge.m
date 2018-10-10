@@ -31,9 +31,9 @@ V_noise = var(real(noise) + imag(noise));
 % insert target(s)
 target_voltage = sqrt(SNR);
 target_signal = target_voltage*randn(1,t)*(1 + j)/sqrt(2);
-signal = real(noise).^2 + imag(noise).^2;
+signal = noise; % noise only; H0
 for y = 0:(t - 1)   % update signal with targets from centre of data at intervals of 3 samples ???
-    signal((D/2) + 1 + 3*y) = signal((D/2) + 1 + 3*y) + real(target_signal(y + 1)).^2 + imag(target_signal(y + 1)).^2;
+    signal((D/2) + 1 + 3*y) = (signal((D/2) + 1 + 3*y) + target_signal(y + 1)).^2;  % H1
 end
 
 % compute CA-CFAR interference statistic 'g'

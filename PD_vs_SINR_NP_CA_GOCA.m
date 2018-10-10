@@ -66,21 +66,8 @@ GOCA_g(lag_greater) = sum_lagging(lag_greater);
 
 GOCA_T = GOCA_a.*GOCA_g;
 
-%% Algorithm PFAs
-% H0 hypothesis (noise only)
+%% H0 hypothesis (noise only)
 H0 = (randn(1,k) + j*randn(1,k))/sqrt(2);
-
-% NP false alarms
-new_false_alarms = length(find(((real(H0).^2 + imag(H0).^2) - NP_T) > 0));
-NP_false_alarms = NP_false_alarms + new_false_alarms;   % add up false alarms across all iterations
-
-% CA false alarms
-new_false_alarms = length(find(((real(H0).^2 + imag(H0).^2) - CA_T) > 0));
-CA_false_alarms = CA_false_alarms + new_false_alarms;   % add up false alarms across all iterations
-
-% GOCA false alarms
-new_false_alarms = length(find(((real(H0).^2 + imag(H0).^2) - GOCA_T) > 0));
-GOCA_false_alarms = GOCA_false_alarms + new_false_alarms;   % add up false alarms across all iterations
 
 %% Algorithm PDs
 for snr = 1:length(SNR)

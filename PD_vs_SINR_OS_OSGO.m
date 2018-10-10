@@ -20,19 +20,16 @@ SNR = 10.^(SNR_dB./10);                 % Decibels to linear SNR
 k = 10^6;
 
 %% OSGO-CFAR Setup and Constant
-
 OSGO_a = 12.85;                        	% for PFA = 10^-6, N = 32
 OSGO_PD_matrix = zeros(length(SNR),1);
 OSGO_false_alarms = 0;
 
 %% OS-CFAR Setup and Constant
-
 OS_a = 20.9542;                         % for PFA = 10^-6, N = 32
 OS_PD_matrix = OSGO_PD_matrix;
 OS_false_alarms = 0;
 
 %% Create noise
-
 % complex Gaussian noise (I + jQ)/sqrt(2)
 lagging_window = (randn(N/2,k) + j.*randn(N/2,k))/sqrt(2); % (N/2)xk
 
@@ -40,9 +37,7 @@ lagging_window = (randn(N/2,k) + j.*randn(N/2,k))/sqrt(2); % (N/2)xk
 leading_window = (randn(N/2,k) + j.*randn(N/2,k))/sqrt(2); % (N/2)xk
 
 %% Algorithm Thresholds
-
 % OSGO threshold
-% determine which ordered window's mean is larger, then add those cell entries into OSGO_g array
 OSGO_lag_sorted = sort(real(lagging_window).^2 + imag(lagging_window).^2,1,'ascend');
 OSGO_lead_sorted = sort(real(leading_window).^2 + imag(leading_window).^2,1,'ascend');
 OSGO_diff = OSGO_lead_sorted(k_OSGO,:) - OSGO_lag_sorted(k_OSGO,:);
@@ -60,17 +55,8 @@ OS_g = OS_sorted(k_factor,:);                           % assign g based on OS k
 
 OS_T = OS_a.*OS_g;
 
-%% Algorithm PFAs
-% H0 hypothesis (noise only)
+%% H0 hypothesis (noise only)
 H0 = (randn(1,k) + j*randn(1,k))/sqrt(2);
-
-% OSGO false alarms
-new_false_alarms = length(find(((real(H0).^2 + imag(H0).^2) - OSGO_T) > 0));
-OSGO_false_alarms = OSGO_false_alarms + new_false_alarms;   % add up false alarms across all iterations
-
-% OS false alarms
-new_false_alarms = length(find(((real(H0).^2 + imag(H0).^2) - OS_T) > 0));
-OS_false_alarms = OS_false_alarms + new_false_alarms;   % add up false alarms across all iterations
 
 %% Algorithm PDs
 

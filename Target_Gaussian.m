@@ -16,8 +16,8 @@ SNR = 10^(SNR_dB/10);					% SNR linear
 Target = sqrt(SNR).*(randn(1,1) + 1i.*randn(1,1))/sqrt(2);	% Target data
 
 % Insert target at centre of data
-signal = real(GaussianNoise).^2 + imag(GaussianNoise).^2;
-signal(D/2) = signal(D/2) + real(Target).^2 + imag(Target).^2;
+signal = GaussianNoise;
+signal(D/2) = (signal(D/2) + Target).^2;
 
 % Plot data (dB)
 figure;

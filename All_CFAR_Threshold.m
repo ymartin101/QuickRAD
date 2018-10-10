@@ -15,18 +15,19 @@ j = 1i;                                 % use j as sqrt(-1)
 PFA = 10^-6;                            % desired PFA
 SNRdB = 20;                             % SNR in Decibels
 SNR = 10^(SNRdB/10);                    % Decibels to linear SNR
-iterations = 1;
+iterations = 1000;
 TCA_array = zeros(iterations,D);
 TGOCA_array = zeros(iterations,D);
 TOS_array = zeros(iterations,D);
 TOSGO_array = zeros(iterations,D);
+signal_array = zeros(iterations,D);
 
 % include multiple targets
 t = 1;                                  % number of targets and interfering targets
 
 % include clutter edge
-v = 6;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
-d = 3;                                  % number of samples from centre to clutter edge start (distance)
+v = 10;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
+d = -1;                                  % number of samples from centre to clutter edge start (distance)
 
 for iteration = 1:iterations
     % 1xD matrix of complex Gaussian noise: (I + jQ)/sqrt(2); v scales second part => clutter edge
@@ -35,10 +36,9 @@ for iteration = 1:iterations
     % insert target(s)
     target_voltage = sqrt(SNR);
     target_signal = target_voltage*(randn(1,t) + j.*randn(1,t))/sqrt(2);
-    signal = real(noise).^2 + imag(noise).^2;
-    signal_H0 = signal; % noise only
+    signal = noise; % noise only; H0
     for y = 0:(t - 1)   % update signal with targets from centre of data at intervals of 3 samples ???
-        signal((D/2) + 1 + 3*y) = signal((D/2) + 1 + 3*y) + real(target_signal(y + 1)).^2 + imag(target_signal(y + 1)).^2;
+        signal((D/2) + 1 + 3*y) = (signal((D/2) + 1 + 3*y) + target_signal(y + 1)).^2;  % H1
     end
 
     %% CA-CFAR
@@ -69,7 +69,7 @@ for iteration = 1:iterations
     end
 
     % GOCA-CFAR constant 'a' for desired PFA
-    a_GOCA = 2;
+    a_GOCA = 2.4195;
 
     % compute detection threshold 'T'
     T_GOCA = a_GOCA.*g_GOCA;
@@ -111,16 +111,20 @@ for iteration = 1:iterations
     % compute detection threshold 'T'
     T_OSGO = a_OSGO.*g_OSGO;
     TOSGO_array(iteration,:) = T_OSGO;
+    
+    % store signal in array
+    signal_array(iteration,:) = signal;
 end
     
 % plot the threshold and noise
 x = 0:(D - 1); % x-axis sample number
 figure;
-T = mean(TCA_array,1);
-T_GOCA = mean(TGOCA_array,1);
-T_OS = mean(TOS_array,1);
-T_OSGO = mean(TOSGO_array,1);
-plot(x,20*log10(signal),x,20*log10(T),x,20*log10(T_GOCA),x,20*log10(T_OS),x,20*log10(T_OSGO),'LineWidth',1);
+T = mean(20*log10(TCA_array),1);
+T_GOCA =  mean(20*log10(TGOCA_array),1);
+T_OS =  mean(20*log10(TOS_array),1);
+T_OSGO =  mean(20*log10(TOSGO_array),1);
+signal_mean =  mean(20*log10(signal_array),1);
+plot(x,signal_mean,x,T,x,T_GOCA,x,T_OS,x,T_OSGO,'LineWidth',1);
 hold on;
 ylim([-60 70]);
 xlabel('Range Bin Number');

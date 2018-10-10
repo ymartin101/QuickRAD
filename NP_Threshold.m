@@ -28,10 +28,10 @@ x = T*ones(1,length(n));
 
 % Swerling 1 target
 target = sqrt(SNR)*(randn(1,1) + j.*randn(1,1))/sqrt(2);
+signal = noise;
 
 % insert target at centre of data
-signal = real(noise).^2 + imag(noise).^2;
-signal(N/2) = signal(N/2) + real(target).^2 + imag(target).^2;
+signal(N/2) = (noise(N/2) + target).^2;
 
 % plot data and NP threshold
 figure;

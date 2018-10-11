@@ -14,6 +14,6 @@ figure;
 n = 0:(D - 1);
 plot(n,GaussianNoise);
 hold on;
-xlabel('Data');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 title('Typical Gaussian Noise Signal');

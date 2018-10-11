@@ -24,7 +24,7 @@ figure;
 n = 0:(D - 1);
 plot(n,20*log10(signal));
 hold on;
-xlabel('Data');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 title('Target in Noise Signal');
 SNR_dB = 20;							% SNR in dB

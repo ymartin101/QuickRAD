@@ -16,7 +16,7 @@ PFA = 10^-3;                            % desired PFA
 SNR_dB = 20;                            % desired SNR in dB
 SNR = 10^(SNR_dB/10);                   % convert dB to linear
 t = 0;                                  % targets + interfering targets (max 3)
-v = 12;                                 % variance of noise in clutter edge; v = 1 => no clutter edge
+v = 10;                                 % variance of noise in clutter edge; v = 1 => no clutter edge
 d = 0;                                  % number of samples from centre to clutter edge start (distance)
 
 % 1xD matrix of complex Gaussian noise: (I + jQ)/sqrt(2); v scales second part => clutter edge
@@ -53,6 +53,6 @@ x = 0:(D - 1); % x-axis sample number
 figure;
 plot(x,20*log10(signal));
 hold on;
-xlabel('Range Bin Number');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 title('Typical Clutter Edge');

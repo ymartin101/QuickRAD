@@ -52,7 +52,7 @@ x = 0:(D - 1); % x-axis sample number
 figure;
 plot(x,20*log10(signal),x,20*log10(T));
 ylim([-60 60]);
-xlabel('Range Bin Number');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 title('CA-CFAR Detector');
 lgd = legend('Data','CA-CFAR Threshold Value');

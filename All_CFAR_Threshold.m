@@ -127,7 +127,7 @@ signal_mean =  mean(20*log10(signal_array),1);
 plot(x,signal_mean,x,T,x,T_GOCA,x,T_OS,x,T_OSGO,'LineWidth',1);
 hold on;
 ylim([-60 70]);
-xlabel('Range Bin Number');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 title('Various CFAR Detectors');
 lgd = legend('Data','CA Threshold','GOCA Threshold','OS Threshold','OSGO Threshold');

@@ -69,7 +69,7 @@ T = a.*g;
 x = 0:(D - 1); % x-axis sample number
 figure;
 plot(x,20*log10(signal),x,20*log10(T));
-xlabel('Range Bin Number');
+xlabel('Range Bin');
 ylabel('Amplitude [dB]');
 ylim([-60 60]);
 title('GOCA-CFAR Detector');

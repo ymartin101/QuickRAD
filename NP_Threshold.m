@@ -26,12 +26,15 @@ T = -log(PFA_desired)*sqrt(v);          % v = 1 by default
 % constant threshold value line
 x = T*ones(1,length(n));
 
-% Swerling 1 target
+% define target
 target = sqrt(SNR)*(randn(1,1) + j.*randn(1,1))/sqrt(2);
 signal = noise;
 
 % insert target at centre of data
-signal(N/2) = (noise(N/2) + target).^2;
+signal(N/2) = noise(N/2) + target;
+
+% square law detector after target is added
+signal = abs(signal).^2;
 
 % plot data and NP threshold
 figure;

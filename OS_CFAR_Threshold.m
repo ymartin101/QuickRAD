@@ -22,7 +22,7 @@ k = round(3*N/4);                       % k-factor for OS-CFAR
 t = 1;                                  % number of targets and interfering targets (max 3); default is 1
 
 % include clutter edge
-v = 10;                                  % variance of noise in clutter edge; v = 1 => no clutter edge (default)
+v = 2;                                  % variance of noise in clutter edge; v = 1 => no clutter edge (default)
 d = -1;                                  % number of samples from centre to clutter edge start (distance)
 
 % 1xD matrix of complex Gaussian noise: (I + jQ)/sqrt(2); v scales second part => clutter edge
@@ -31,10 +31,13 @@ noise = [((randn(1,(D/2) + d) + j.*randn(1,(D/2) + d))/sqrt(2)),(sqrt(v)*(randn(
 % insert target(s)
 target_voltage = sqrt(SNR);
 target_signal = target_voltage*(randn(1,t) + j.*randn(1,t))/sqrt(2);
-signal = noise; % noise only; H0
-for y = 0:(t - 1)   % update signal with targets from centre of data at intervals of 3 samples ???
-    signal((D/2) + 1 + 3*y) = (signal((D/2) + 1 + 3*y) + target_signal(y + 1)).^2;  % H1
+signal1 = noise; % noise only; H0
+for y = 0:(t - 1)   % update signal with targets from centre of data at intervals of 3 samples
+    signal1((D/2) + 1 + 3*y) = signal1((D/2) + 1 + 3*y) + target_signal(y + 1);  % H1
 end
+
+% square law detector after target is added
+signal = abs(signal1).^2;
 
 % compute OS-CFAR interference statistic 'g'
 g = zeros(D,1);

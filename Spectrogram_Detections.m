@@ -39,7 +39,6 @@ X = Cdata(1:NumOfPRIs,RangeBin);
 kc = floor((length(X) - overlap)/(window_length - overlap));
 signal = fftshift(P);
 signal2 = fftshift(P,1);
-% 	signal(124:132,:) = 0;
 
 % matrix containing background statistics
 g = zeros(NFFT,kc);                 % NFFT x kc matrix

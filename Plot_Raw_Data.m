@@ -7,7 +7,7 @@
 close all;
 clc;
 % select dataset to plot
-load('TFC15_008.mat');  % loads variables: Cdata, NumOfPRIs, NumOfRangeBins, PRI_s; must be included in .mat file
+load('TFA17_007.mat');  % loads variables: Cdata, NumOfPRIs, NumOfRangeBins, PRI_s; must be included in .mat file
 
 %% Plot raw measured data
 range_bins = 1:1:size(Cdata,2);

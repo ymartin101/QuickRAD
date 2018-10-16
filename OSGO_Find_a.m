@@ -6,9 +6,8 @@
 %% Startup
 close all;
 clc;
-load('CFA17_002.mat');	% input data with variables: Cdata, NumOfPRIs, NumOfRangeBins, PRI_s; must be included in .mat file
-RangeBin = 1;           % select range bin to process
-PFA_desired = 10^-6;    % user-selected desired PFA
+% Ensure "z" variable is loaded into workspace after generating the clutter data
+PFA_desired = 10^-3;                        % desired PFA
 
 %% Parameters
 c0 = 299792458;                             % speed of light
@@ -18,8 +17,7 @@ resolution_meters = c0/(2*bandwidth);       % range resolution in meters
 j = sqrt(-1);                               % sqrt(-1)
 
 % Sampling frequency, period
-PRI = PRI_s;
-PRF = 1/PRI;
+PRF = 5000;             % assume PRF of 5000 Hz
 ts = 1/PRF;             % unused? Equal to PRI?
 
 % Spectrogram
@@ -28,21 +26,18 @@ NFFT = window_length;
 overlap = NFFT/2;       % overlap in samples
 freq_axis = (-(NFFT/2):1:((NFFT/2) - 1))*PRF/NFFT;
 
-% OSGO-CFAR parameters
-% "a" is unknown
+% OSGO-CFAR parameters; tune until desired PFA is achieved
+% "a" is unknown; determined iteratively later
 N = 8;
 k = round(5*N/12);
-CT = 0.01;
+CT = 0.05425;
 
 % Determine kc; frequency-domain signal will be of size NFFT x kc
-X = Cdata(:);
-kc = floor((length(X) - overlap)/(window_length - overlap));
+kc = floor((length(z.') - overlap)/(window_length - overlap));
 summation = zeros(kc,1);              % size of summation matrix
 
 %% CFAR detection
-X = Cdata(:);
-[S,F,T1,P] = spectrogram(X,window_length,overlap,NFFT,PRF); 
-kc = floor((length(X) - overlap)/(window_length - overlap));
+[S,F,T1,P] = spectrogram(z.',window_length,overlap,NFFT,PRF); 
 signal = fftshift(P,1);             % centre zero-frequency component  
 
 % Matrix of background statistic
@@ -61,22 +56,22 @@ for CUT = ((N/2) + 1):1:(NFFT - (N/2))
 end
 
 %% Calculate PFA and minimise error between actual and desired PFA
-PFA_error = inf;
-PFA_temp = 0;
+PFA_error = inf;        % initial error between actual and desired PFA
+PFA_desired = 10^-3;    % desired PFA
+summation = zeros(kc,1);% size of summation matrix
 
-for a_i = 40:0.5:80    % test different "a" values to minimise PFA error    
+for a_i = 0:0.1:50     % test different "a" values to minimise PFA error    
     T = a_i.*g;                                 % CFAR detection threshold; NFFT x kc matrix
     signal_minus_T = signal - T;                % NFFT x kc matrix
-    detections_index = find(signal_minus_T > 0);% returns indices (counting down columns) of values > 0
+    detections_index = find(signal_minus_T > 0);% returns indices of values > 0
     detection_result = zeros(NFFT,kc);
     detection_result(detections_index) = signal_minus_T(detections_index);
     summation = fftshift(sum(detection_result,1),1);	% summation for clustering
-    detections_index = find(summation > CT);	% max number of entries = kc x NumOfRangeBins 
-    PFA_temp = length(detections_index)/length(summation);
+    detections_index = find(summation > CT);
+    PFA_actual = length(detections_index)/length(summation);
     
-    if abs(PFA_temp - PFA_desired) < PFA_error
-        a = a_i;
-        PFA_error = abs(PFA_temp - PFA_desired);
+    if abs(PFA_actual - PFA_desired) < PFA_error
+        a = a_i;    % assign new alpha if PFA_actual has improved
+        PFA_error = abs(PFA_actual - PFA_desired);
     end
 end
-

@@ -1,0 +1,62 @@
+<deployment-project plugin="plugin.apptool" plugin-version="1.0">
+  <configuration build-checksum="2169007695" file="C:\Users\mrtmo\Desktop\RadarDetectionofSmallBoatsatSea.prj" location="C:\Users\mrtmo\Desktop" name="RadarDetectionofSmallBoatsatSea" target="target.mlapps" target-name="Package App">
+    <param.appname>RadarDetectionofSmallBoatsatSea</param.appname>
+    <param.authnamewatermark>M. Y. Martin</param.authnamewatermark>
+    <param.email>mrtmog014@myuct.ac.za</param.email>
+    <param.company />
+    <param.icon />
+    <param.icons />
+    <param.summary>GUI for EEE4022S thesis topic, 2018</param.summary>
+    <param.description>Programmed by M. Y. Martin, 2018
+
+Allows for production of detection plots in measured radar data using an OSGO-CFAR detector, as well as plots of a dataset's spectrogram in a specific range bin. A clutter dataset's PDF, after passing through a square law detector, can also be simulated.</param.description>
+    <param.screenshot>${PROJECT_ROOT}\UCT\EEE4022S\Report\Images\gui1.png</param.screenshot>
+    <param.version>1.0</param.version>
+    <param.products.name />
+    <param.products.id />
+    <param.products.version />
+    <param.platforms />
+    <param.output>C:\Users\mrtmo\Desktop</param.output>
+    <param.guid>9cd84235-3dbb-4fe1-9e32-c6ff6d38a0ac</param.guid>
+    <unset>
+      <param.company />
+      <param.icon />
+      <param.icons />
+      <param.version />
+      <param.products.name />
+      <param.products.id />
+      <param.products.version />
+      <param.platforms />
+      <param.output />
+    </unset>
+    <fileset.main>
+      <file>${PROJECT_ROOT}\MRTMOG014_GUI.mlapp</file>
+    </fileset.main>
+    <fileset.depfun />
+    <fileset.resources />
+    <fileset.package />
+    <build-deliverables>
+      <file location="C:\Users\mrtmo" name="Desktop" optional="false">C:\Users\mrtmo\Desktop</file>
+    </build-deliverables>
+    <workflow />
+    <matlab>
+      <root>C:\Program Files\MATLAB\R2017b</root>
+      <toolboxes />
+    </matlab>
+    <platform>
+      <unix>false</unix>
+      <mac>false</mac>
+      <windows>true</windows>
+      <win2k>false</win2k>
+      <winxp>false</winxp>
+      <vista>false</vista>
+      <linux>false</linux>
+      <solaris>false</solaris>
+      <osver>10.0</osver>
+      <os32>false</os32>
+      <os64>true</os64>
+      <arch>win64</arch>
+      <matlab>true</matlab>
+    </platform>
+  </configuration>
+</deployment-project>

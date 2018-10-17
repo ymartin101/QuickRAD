@@ -15,7 +15,7 @@ j = 1i;                                 % use j as sqrt(-1)
 PFA = 10^-6;                            % desired PFA
 SNRdB = 20;                             % SNR in Decibels
 SNR = 10^(SNRdB/10);                    % Decibels to linear SNR
-iterations = 10000;
+iterations = 1000;
 TCA_array = zeros(iterations,D);
 TGOCA_array = zeros(iterations,D);
 TOS_array = zeros(iterations,D);
@@ -26,7 +26,7 @@ signal_array = zeros(iterations,D);
 t = 1;                                  % number of targets and interfering targets
 
 % include clutter edge
-v = 2;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
+v = 5;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
 d = -1;                                % number of samples from centre to clutter edge start (distance)
 
 for iteration = 1:iterations
@@ -121,11 +121,11 @@ end
 % plot the threshold and noise
 x = 0:(D - 1); % x-axis sample number
 figure;
-T = mean(20*log10(TCA_array),1);
-T_GOCA =  mean(20*log10(TGOCA_array),1);
-T_OS =  mean(20*log10(TOS_array),1);
-T_OSGO =  mean(20*log10(TOSGO_array),1);
-signal_mean =  mean(20*log10(signal_array),1);
+T = mean(10*log10(TCA_array),1);
+T_GOCA =  mean(10*log10(TGOCA_array),1);
+T_OS =  mean(10*log10(TOS_array),1);
+T_OSGO =  mean(10*log10(TOSGO_array),1);
+signal_mean =  mean(10*log10(signal_array),1);
 
 plot(x,signal_mean,x,T,x,T_GOCA,x,T_OS,x,T_OSGO,'LineWidth',1);
 hold on;

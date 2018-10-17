@@ -21,7 +21,7 @@ SNR = 10^(SNRdB/10);                    % Decibels to linear SNR
 t = 1;                                  % number of targets and interfering targets (max 3)
 
 % include clutter edge
-v = 2;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
+v = 1;                                  % variance of noise in clutter edge; v = 1 => no clutter edge
 d = -1;                                  % number of samples from centre to clutter edge start (distance)
 
 % 1xD matrix of complex Gaussian noise: (I + jQ)/sqrt(2); v scales second part => clutter edge
@@ -53,10 +53,11 @@ T = a.*g;
 % plot the threshold and noise
 x = 0:(D - 1); % x-axis sample number
 figure;
-plot(x,20*log10(signal),x,20*log10(T));
-ylim([-60 60]);
+plot(x,10*log10(signal),x,10*log10(T));
 xlabel('Range Bin');
 ylabel('Amplitude [dB]');
+ylim([-60 60]);
 title('CA-CFAR Detector');
 lgd = legend('Data','CA-CFAR Threshold Value');
 set(lgd,'Location','SouthEast');
+

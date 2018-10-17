@@ -18,12 +18,12 @@ Target = sqrt(SNR).*(randn(1,1) + 1i.*randn(1,1))/sqrt(2);	% Target data
 % Insert target at centre of data
 signal = GaussianNoise;
 signal(D/2) = signal(D/2) + Target;
-signal = signal.^2;
+signal = abs(signal).^2;
 
 % Plot data (dB)
 figure;
 n = 0:(D - 1);
-plot(n,20*log10(signal));
+plot(n,10*log10(signal));
 hold on;
 xlabel('Range Bin');
 ylabel('Amplitude [dB]');

@@ -45,8 +45,8 @@ num_samples = length(H0);
   H1 = H0 + target_signal;
   
 %% Generate and plot Spectrogram
-window_length = 256;
-overlap = 128;          % number of overlapping window samples
+window_length = 512;
+overlap = 256;          % number of overlapping window samples
 NFFT = window_length;
 freq_axis = (-NFFT/2:1:(NFFT/2-1))*PRF/NFFT;
 [S,F,T1,P] = spectrogram(H1,window_length,overlap,NFFT,PRF);  % S = SPECTROGRAM(H0Data,WINDOW,NOVERLAP,NFFT) 

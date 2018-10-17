@@ -37,8 +37,7 @@ RangeBin = 40;
 X = Cdata(1:NumOfPRIs,RangeBin);
 [S,F,T1,P] = spectrogram(X,window_length,overlap,NFFT,PRF); 
 kc = floor((length(X) - overlap)/(window_length - overlap));
-signal = fftshift(P);
-signal2 = fftshift(P,1);
+signal = fftshift(P,1);
 
 % matrix containing background statistics
 g = zeros(NFFT,kc);                 % NFFT x kc matrix

@@ -140,7 +140,7 @@ end
 
 %% OSGO-CFAR on clutter only; for PD
 % CFAR detection
-for RangeBin = 1:NumOfRangeBins             % test a small sample to quicken processing
+for RangeBin = 1:NumOfRangeBins
     X = C_backup(1:NumOfPRIs,RangeBin);
     [S,F,T1,P] = spectrogram(X,window_length,overlap,NFFT,PRF); 
     signal = fftshift(P,1);

@@ -1,7 +1,7 @@
 %% File information
 % Written by M. Y. Martin (MRTMOG014)
 % EEE4022S (2018)
-% Spectrogram.m: Generate spectrogram for a target in one range bin
+% Spectrogram.m: Generate spectrogram and inserted a simulated target in one range bin
 
 %% Setup
 clear all;
